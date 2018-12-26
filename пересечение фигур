@@ -1,0 +1,35 @@
+def read_polygon(name):
+    print(name, 'polygon.\nEnter nums of vertexes.')
+    n = int(input())
+    print('Enter cords of vertexes. Format: x y')
+    x = [0]*n
+    y = [0]*n
+    for i in range(n):
+        x[i], y[i] = map(int, input().split())
+    return n, x, y
+ 
+ 
+def in_polygon(x, y, xp, yp):
+    c = False
+    for i in range(len(xp)):
+        if (((yp[i]<=y and y<yp[i-1]) or (yp[i-1]<=y and y<yp[i])) and \
+            (x > (xp[i-1] - xp[i]) * (y - yp[i]) / (yp[i-1] - yp[i]) + xp[i])): c = not c
+    return c
+ 
+ 
+def main():
+    fn, fx, fy = read_polygon('First')
+    sn, sx, sy = read_polygon('Second')
+    for i in range(fn):
+        if in_polygon(fx[i], fy[i], sx, sy):
+            print('Intersect.')
+            exit(0)
+    for i in range(sn):
+        if in_polygon(sx[i], sy[i], fx, fy):
+            print('Intersect.')
+            exit(0)
+    print('Not intersect.')
+ 
+ 
+if __name__ == '__main__':
+    main()
